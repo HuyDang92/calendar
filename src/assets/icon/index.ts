@@ -1,0 +1,15 @@
+export { ReactComponent as LogoIcon } from './logo.svg';
+export { ReactComponent as ScanIcon } from './scan.svg';
+export { ReactComponent as MessageIcon } from './message.svg';
+export { ReactComponent as NothingIcon } from './nothing.svg';
+export { ReactComponent as EditIcon } from './edit.svg';
+export { ReactComponent as DocumentIcon } from './document.svg';
+export { ReactComponent as ScanBlueIcon } from './scan-blue.svg';
+export { ReactComponent as CloseIcon } from './close.svg';
+export { ReactComponent as PlusEventIcon } from './plus-event.svg';
+export { ReactComponent as ImageIcon } from './image-icon.svg';
+export { ReactComponent as DownloadIcon } from './download-icon.svg';
+export { ReactComponent as PlusIcon } from './plus-icon.svg';
+export { ReactComponent as SearchIcon } from './search-icon.svg';
+export { ReactComponent as EyeIcon } from './eyes.svg';
+export { ReactComponent as EditBtnIcon } from './edit-icon.svg';
