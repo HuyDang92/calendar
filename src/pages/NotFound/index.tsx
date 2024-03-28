@@ -1,6 +1,5 @@
 import { Button } from '@radix-ui/themes';
 import { NavLink } from 'react-router-dom';
-import { useAppSelector } from '~/hooks/useActionRedux';
 
 function NotFound() {
   return (
