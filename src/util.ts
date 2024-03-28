@@ -1,4 +1,4 @@
-import { startOfMonth, getYear, getDay } from 'date-fns';
+import { startOfMonth, getDay } from 'date-fns';
 
 export const GetMonth = (month: number = new Date().getMonth(), year: number = new Date().getFullYear()): Date[][] => {
   // Get the first day of the month

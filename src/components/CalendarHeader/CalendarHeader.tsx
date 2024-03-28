@@ -40,7 +40,7 @@ const CalendarHeader = ({ month }: SideBarProps) => {
   return (
     <header className="flex items-center justify-between p-5">
       <div className="flex items-center gap-2 sm:gap-5">
-        <Link to={'/'}>
+        <Link to={'/'} className="sm:hidden">
           <Icon name="arrow-back-outline" className="me-5 text-2xl" />
         </Link>
         <Button variant="outline" className="rounded-xl" onClick={resetMonth}>
