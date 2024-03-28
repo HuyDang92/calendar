@@ -3,6 +3,8 @@ import { format, getMonth, setMonth, setYear } from 'date-fns';
 import { GetMonth } from '~/util';
 import Icon from '~/components/customs/Icon';
 import GlobalContext from '~/context/GlobalContext';
+import { Link } from 'react-router-dom';
+import { Button } from '@radix-ui/themes';
 
 const SmallCalendar = () => {
   const [currenMonthIndex, setCurrenMonthIndex] = useState(getMonth(new Date()));
@@ -62,7 +64,10 @@ const SmallCalendar = () => {
 
   return (
     <div className="">
-      <div className="flex items-center justify-center gap-5 py-4">
+      <Link to={'/calender-register'}>
+        <Button className="float-end bg-lightBlue sm:hidden">Create Event</Button>
+      </Link>
+      <div className="flex items-center justify-center gap-5 pb-4 sm:py-4">
         <Icon
           name="chevron-back-outline"
           onClick={decrementMonth}

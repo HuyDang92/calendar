@@ -1,5 +1,5 @@
 import { Box, Button, Dialog, Flex, Tabs, Text, TextField } from '@radix-ui/themes';
-import { useContext, useEffect, useId, useState } from 'react';
+import React, { useContext, useEffect, useId, useState } from 'react';
 import { setYear, setMonth, format, getMonth } from 'date-fns';
 import GlobalContext from '~/context/GlobalContext';
 import Icon from '~/components/customs/Icon';
@@ -19,6 +19,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
   const [type, setType] = useState<string>('Event');
   const [theme, setTheme] = useState<string>(data?.theme ?? 'lightBlue');
   const colors = ['lightBlue', 'lightOrange', 'darkOrange'];
+  console.log(data?.title);
 
   const appointment = useForm<IEvent>({
     defaultValues: {
@@ -77,14 +78,8 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
     setType('Event');
     reset();
     appointment.reset();
-    setTheme('lightBlue');
-  };
-  const removeEvent = (idEvent?: string) => {
-    const newArray = dataEvent.filter((item) => item.id !== idEvent);
-    setDataEvent(newArray);
-    console.log(data?.title);
-
-    if (data) {
+    setTheme(data?.theme ?? 'lightBlue');
+    if (data?.type === 'Event') {
       setValue('title', data.title);
       setValue('client', data.client);
       setValue('thumbnail', data.thumbnail);
@@ -96,13 +91,34 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
       setValue('description', data.description);
       setValue('theme', data.theme);
     }
+    if (data?.type === 'Appointment') {
+      appointment.setValue('title', data.title);
+      appointment.setValue('client', data.client);
+      appointment.setValue('thumbnail', data.thumbnail);
+      appointment.setValue('linkMeeting', data.linkMeeting);
+      appointment.setValue('startTime', data.startTime);
+      appointment.setValue('endTime', data.endTime);
+      appointment.setValue('date', data.date);
+      appointment.setValue('address', data.address);
+      appointment.setValue('description', data.description);
+      appointment.setValue('theme', data.theme);
+    }
+  };
+  const removeEvent = (idEvent?: string) => {
+    const newArray = dataEvent.filter((item) => item.id !== idEvent);
+    setDataEvent(newArray);
   };
 
   return (
     <Dialog.Root>
       <Dialog.Trigger onClick={resetForm}>{children}</Dialog.Trigger>
       <Dialog.Content maxWidth="500px" className="bg-[#fff]/40 text-white backdrop-blur-lg">
-        <Dialog.Title>Add Event</Dialog.Title>
+        <div className="flex items-center justify-between">
+          <span className="pb-3 font-bold">Add Event</span>
+          <Dialog.Close>
+            <Icon name="close-outline" className="rounded-full p-2 transition-all hover:bg-[#fff] hover:text-[#000]" />
+          </Dialog.Close>{' '}
+        </div>
         <div className="flex gap-3">
           <Icon name="time-outline" className="text-2xl" />
           <p>{selectedDay}</p>
@@ -319,4 +335,4 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
   );
 };
 
-export default DialogAction;
+export default React.memo(DialogAction);

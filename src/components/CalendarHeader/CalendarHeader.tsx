@@ -4,6 +4,7 @@ import Icon from '~/components/customs/Icon';
 import { setYear, setMonth, format, getMonth } from 'date-fns';
 import GlobalContext from '~/context/GlobalContext';
 import DialogSetting from '~/components/DialogSetting';
+import { Link } from 'react-router-dom';
 
 type SideBarProps = {
   month: Date[][];
@@ -38,7 +39,10 @@ const CalendarHeader = ({ month }: SideBarProps) => {
   };
   return (
     <header className="flex items-center justify-between p-5">
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-2 sm:gap-5">
+        <Link to={'/'}>
+          <Icon name="arrow-back-outline" className="me-5 text-2xl" />
+        </Link>
         <Button variant="outline" className="rounded-xl" onClick={resetMonth}>
           Today
         </Button>
@@ -56,7 +60,7 @@ const CalendarHeader = ({ month }: SideBarProps) => {
         </div>
         <div className="text-xl font-bold text-darkBlue">{formattedDate}</div>
       </div>
-      <div className="flex items-center gap-5">
+      <div className="hidden items-center gap-5 sm:flex">
         <DialogSetting>
           <Icon name="settings-outline" className="rounded-full p-2 text-xl transition-all hover:bg-[#eee]" />
         </DialogSetting>

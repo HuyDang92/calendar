@@ -65,6 +65,19 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
     }
   }, [day, dataEvent]);
 
+  const moreEvent = (day: any) => {
+    const formattedSelectedDay = format(day, 'dd-MM-yyyy');
+    const filteredData = dataEvent.filter((item) => {
+      const formattedDate = format(parseISO(item.date), 'dd-MM-yyyy');
+      return formattedDate === formattedSelectedDay;
+    });
+    return filteredData.length > 2 ? (
+      <div className=" px-1 text-[9px] text-lightBlue">+{filteredData.length - 2} more</div>
+    ) : (
+      ''
+    );
+  };
+
   return (
     <DialogAction date={day} action="add">
       <motion.div
@@ -78,22 +91,23 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
       >
         <div className="w-full">
           <div
-            className={` relative left-1/2 mt-2 flex h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full text-sm font-medium ${dayInMonth()} ${currentDay()}`}
+            className={` relative left-1/2 mt-1 flex h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full text-sm font-medium ${dayInMonth()} ${currentDay()}`}
           >
             {dayOfMonth}
           </div>
-          <div>
+          <div className="space-y-1">
             {data.length > 0 &&
               data.slice(0, 2).map((item, index) => (
                 <div
                   key={index}
                   className={`${switchThemeBackground(
                     item.theme,
-                  )} mt-1 line-clamp-1 rounded-md border-l-4 p-1 text-[10px] ${switchThemeTitle(item.theme)}`}
+                  )} line-clamp-1 rounded-md border-l-4 p-1 text-[9px] ${switchThemeTitle(item.theme)}`}
                 >
                   {item.title}
                 </div>
               ))}
+            {moreEvent(day)}
           </div>
         </div>
       </motion.div>

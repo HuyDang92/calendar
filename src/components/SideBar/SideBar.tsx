@@ -42,7 +42,7 @@ const SideBar = ({ month }: SideBarProps) => {
   }, [daySelected]);
 
   return (
-    <aside className="sticky top-[12px] flex h-[calc(100vh-24px)] w-[30%] flex-col justify-between rounded-xl bg-[#fff]/30 p-2 shadow-border-light  backdrop-blur-lg">
+    <aside className="top-[12px] flex h-[calc(100vh-24px)] flex-col justify-between rounded-xl bg-[#fff]/30 p-2 shadow-border-light backdrop-blur-lg sm:sticky  sm:w-[30%]">
       <SmallCalendar />
       <div className="px-2">
         <div className="mt-5 flex items-center justify-between border-t pb-3 pt-5 ">
