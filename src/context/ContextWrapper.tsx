@@ -3,8 +3,10 @@ import GlobalContext from '~/context/GlobalContext';
 import { getMonth, getYear } from 'date-fns';
 
 function ContextWrapper(props: any) {
-  const [urlBackground, setUrlBackground] = useState<string>('/bg.jpg');
-
+  const [urlBackground, setUrlBackground] = useState<string>(() => {
+    const storeBackground = localStorage.getItem('urlBackground');
+    return storeBackground ? storeBackground : '/bg.jpg';
+  });
   const [monthIndex, setMonthIndex] = useState<number>(getMonth(new Date()));
   const [monthIndexSmall, setMonthIndexSmall] = useState<any>(null);
   const [daySelected, setDaySelected] = useState<any>(new Date());
@@ -13,6 +15,11 @@ function ContextWrapper(props: any) {
     const storedDataEvent = localStorage.getItem('dataEvent');
     return storedDataEvent ? JSON.parse(storedDataEvent) : [];
   });
+
+  useEffect(() => {
+    // save dataEvent to localStorage
+    localStorage.setItem('urlBackground', urlBackground);
+  }, [urlBackground]);
 
   useEffect(() => {
     // save dataEvent to localStorage

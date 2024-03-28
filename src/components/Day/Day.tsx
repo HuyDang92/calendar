@@ -68,12 +68,11 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
   return (
     <DialogAction date={day} action="add">
       <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
+        initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{
-          duration: 0.8,
+          duration: 0.5,
           delay: 0.1 * rowIndex,
-          ease: [0, 0.71, 0.2, 1.01],
         }}
         className={`flex h-[13.3vh]  cursor-pointer items-start justify-center overflow-hidden border-r border-t  `}
       >
@@ -84,16 +83,17 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
             {dayOfMonth}
           </div>
           <div>
-            {data.slice(0, 2).map((item, index) => (
-              <div
-                key={index}
-                className={`${switchThemeBackground(
-                  item.theme,
-                )} mt-1 line-clamp-1 rounded-md border-l-4 p-1 text-[10px] ${switchThemeTitle(item.theme)}`}
-              >
-                {item.title}
-              </div>
-            ))}
+            {data.length > 0 &&
+              data.slice(0, 2).map((item, index) => (
+                <div
+                  key={index}
+                  className={`${switchThemeBackground(
+                    item.theme,
+                  )} mt-1 line-clamp-1 rounded-md border-l-4 p-1 text-[10px] ${switchThemeTitle(item.theme)}`}
+                >
+                  {item.title}
+                </div>
+              ))}
           </div>
         </div>
       </motion.div>

@@ -13,10 +13,11 @@ const SmallCalendar = () => {
   // get format month and year
   const formattedDate = format(setYear(setMonth(new Date(), currenMonthIndex), fullYear), 'MMMM yyyy');
 
+  // async call api between large and small calendar
   useEffect(() => {
     setCurrentMonth(GetMonth(monthIndex, fullYear));
     setCurrenMonthIndex(monthIndex);
-  }, [monthIndex]);
+  }, [monthIndex, daySelected]);
 
   useEffect(() => {
     setCurrentMonth(GetMonth(currenMonthIndex, fullYear));
@@ -24,7 +25,7 @@ const SmallCalendar = () => {
 
   const incrementMonth = () => {
     if (currenMonthIndex === 11) {
-      setCurrenMonthIndex(0); // Thiết lập lại currenMonthIndex thành 0
+      setCurrenMonthIndex(0);
       setFullYear(fullYear + 1);
     } else {
       setCurrenMonthIndex(currenMonthIndex + 1);
@@ -33,7 +34,7 @@ const SmallCalendar = () => {
 
   const decrementMonth = () => {
     if (currenMonthIndex === 0) {
-      setCurrenMonthIndex(11); // Thiết lập lại currenMonthIndex thành 11
+      setCurrenMonthIndex(11);
       setFullYear(fullYear - 1);
     } else {
       setCurrenMonthIndex(currenMonthIndex - 1);
@@ -52,6 +53,7 @@ const SmallCalendar = () => {
 
     return formattedDay === formattedToday ? 'bg-darkBlue text-white' : '';
   };
+
   const dayInMonthSmallCalendar = (day: Date) => {
     const formattedDay = format(day, 'MM-yyyy');
     const formattedDate = format(setYear(setMonth(new Date(), currenMonthIndex), fullYear), 'MM-yyyy');

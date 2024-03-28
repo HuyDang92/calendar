@@ -53,7 +53,7 @@ const EventItemForType = (data: IEvent) => {
           <div className={`flex justify-between ${commonStyleWrapper} ${switchThemeBackground(data.theme)}`}>
             <div className="space-y-2">
               <h4 className={`${switchThemeTitle(data.theme)} ${commonStyleTitle} `}>{data.title}</h4>
-              <span className="text-sm font-normal text-[#eee]">
+              <span className="text-sm font-normal text-[#A9A9A9]">
                 {data.startTime} - {data.endTime}
                 {/* {format(parseISO(data.startTime), 'HH:mm a')} - {format(parseISO(data.endTime), 'HH:mm a')} */}
               </span>
@@ -61,11 +61,11 @@ const EventItemForType = (data: IEvent) => {
               <div className="flex items-center gap-3">
                 <Avatar src={data.client?.avatar} fallback="AVT" radius="full" size={'2'} />
                 <a
-                  href={data.client?.linkProfile}
+                  href={data?.client?.linkProfile}
                   target="_blank"
-                  className="text-xs font-medium text-[#eee] underline"
+                  className="cursor-pointer text-xs font-medium text-[#A9A9A9] underline"
                 >
-                  View Client Profile
+                  <span> View Client Profile</span>
                 </a>
               </div>
             </div>
@@ -82,7 +82,7 @@ const EventItemForType = (data: IEvent) => {
             <div className="">
               <h4 className={`${switchThemeTitle(data.theme)} ${commonStyleTitle}`}>{data.title}</h4>
             </div>
-            <span className="text-sm font-normal text-[#eee]">
+            <span className="text-sm font-normal text-[#A9A9A9]">
               {data.startTime} - {data.endTime}
               {/* {format(parseISO(data.startTime), 'HH:mm a')} - {format(parseISO(data.endTime), 'HH:mm a')} */}
             </span>

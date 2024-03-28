@@ -8,7 +8,7 @@ type DialogProps = {
 };
 const DialogSetting = ({ children }: DialogProps) => {
   const { urlBackground, setUrlBackground } = useContext(GlobalContext);
-  const backgroundUrl = ['/bg.jpg', '/bg1.jpg', '/bg2.jpg'];
+  const backgroundUrl = ['/bg.jpg', '/bg1.jpg', '/bg2.jpg', '/bg3.jpg', '/bg4.jpg', '/bg5.jpg'];
 
   return (
     <Dialog.Root>
@@ -21,7 +21,7 @@ const DialogSetting = ({ children }: DialogProps) => {
             <img src={item} alt="" key={index} className="rounded-lg" />
           ))}
         </div> */}
-        <div className="my-5 grid grid-cols-3 gap-2">
+        <div className="my-5 grid grid-cols-3 gap-1">
           {backgroundUrl.map((item) => (
             <label key={item} className="relative">
               <input
@@ -31,7 +31,13 @@ const DialogSetting = ({ children }: DialogProps) => {
                 checked={urlBackground === item}
                 onChange={(e) => setUrlBackground(e.target.value)}
               />
-              <img src={item} alt="" className="w-full rounded-lg" />
+              <img
+                src={item}
+                alt=""
+                className={`${
+                  urlBackground === item && 'border-2 border-lightBlue'
+                } h-[10rem] w-full rounded-xl object-cover p-1 `}
+              />
               {urlBackground === item && (
                 <Icon
                   name="chevron-down-circle-outline"

@@ -26,8 +26,8 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
       client: data?.client,
       thumbnail: data?.thumbnail,
       linkMeeting: data?.linkMeeting,
-      startTime: data?.startTime,
-      endTime: data?.endTime,
+      startTime: data?.startTime ?? '00:00',
+      endTime: data?.endTime ?? '00:00',
       date: data?.date ?? date.toISOString(),
       address: data?.address,
       description: data?.description,
@@ -40,8 +40,8 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
       client: data?.client,
       thumbnail: data?.thumbnail,
       linkMeeting: data?.linkMeeting,
-      startTime: data?.startTime,
-      endTime: data?.endTime,
+      startTime: data?.startTime ?? '00:00',
+      endTime: data?.endTime ?? '00:00',
       date: data?.date ?? date.toISOString(),
       address: data?.address,
       description: data?.description,
@@ -82,12 +82,26 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
   const removeEvent = (idEvent?: string) => {
     const newArray = dataEvent.filter((item) => item.id !== idEvent);
     setDataEvent(newArray);
+    console.log(data?.title);
+
+    if (data) {
+      setValue('title', data.title);
+      setValue('client', data.client);
+      setValue('thumbnail', data.thumbnail);
+      setValue('linkMeeting', data.linkMeeting);
+      setValue('startTime', data.startTime);
+      setValue('endTime', data.endTime);
+      setValue('date', data.date);
+      setValue('address', data.address);
+      setValue('description', data.description);
+      setValue('theme', data.theme);
+    }
   };
 
   return (
     <Dialog.Root>
       <Dialog.Trigger onClick={resetForm}>{children}</Dialog.Trigger>
-      <Dialog.Content maxWidth="450px">
+      <Dialog.Content maxWidth="500px" className="bg-[#fff]/40 text-white backdrop-blur-lg">
         <Dialog.Title>Add Event</Dialog.Title>
         <div className="flex gap-3">
           <Icon name="time-outline" className="text-2xl" />
@@ -103,7 +117,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                 checked={theme === color}
                 onChange={(e) => setTheme(e.target.value)}
               />
-              <span className={`bg-${color} relative rounded-md px-8 py-1`}>
+              <span className={`bg-${color} relative rounded-lg px-8 py-1`}>
                 {theme === color && (
                   <Icon
                     name="chevron-down-circle-outline"
@@ -117,29 +131,37 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
         <Tabs.Root defaultValue={data?.type === 'Appointment' ? 'Appointment' : 'Event'}>
           <Tabs.List>
             {!data && (
-              <Tabs.Trigger value="Event" onClick={() => setType('Event')}>
+              <Tabs.Trigger className="text-[16px] text-[#fff]" value="Event" onClick={() => setType('Event')}>
                 Event
               </Tabs.Trigger>
             )}
             {!data && (
-              <Tabs.Trigger value="Appointment" onClick={() => setType('Appointment')}>
+              <Tabs.Trigger
+                className="text-[16px] text-[#fff]"
+                value="Appointment"
+                onClick={() => setType('Appointment')}
+              >
                 Appointment
               </Tabs.Trigger>
             )}
             {data?.type === 'Event' && (
-              <Tabs.Trigger value="Event" onClick={() => setType('Event')}>
+              <Tabs.Trigger className="text-[16px] text-[#fff]" value="Event" onClick={() => setType('Event')}>
                 Event
               </Tabs.Trigger>
             )}
             {data?.type === 'Appointment' && (
-              <Tabs.Trigger value="Appointment" onClick={() => setType('Appointment')}>
+              <Tabs.Trigger
+                className="text-[16px] text-[#fff]"
+                value="Appointment"
+                onClick={() => setType('Appointment')}
+              >
                 Appointment
               </Tabs.Trigger>
             )}
           </Tabs.List>
 
           <div className="py-3">
-            <Tabs.Content value="Event">
+            <Tabs.Content value="Event" className="outline-none">
               <form onSubmit={handleSubmit(handleSubmitForm)} className="space-y-3">
                 <label>
                   <Text as="div" size="2" mb="1" weight="bold">
@@ -148,7 +170,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                   <input
                     type="text"
                     {...register('title', { required: true })}
-                    className="w-full rounded-md border-2 p-2"
+                    className="w-full rounded-lg border-2 border-[#ccc] bg-transparent  p-2 placeholder:text-white"
                     placeholder="Enter title"
                   />
                 </label>
@@ -160,8 +182,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                     <input
                       type="time"
                       {...register('startTime', { required: true })}
-                      className="w-full rounded-md border-2 p-2"
-                      placeholder="Enter title"
+                      className="w-full rounded-lg border-2 border-[#ccc]  bg-transparent p-2"
                     />
                   </label>
                   <label className="w-full">
@@ -171,20 +192,19 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                     <input
                       type="time"
                       {...register('endTime', { required: true })}
-                      className="w-full rounded-md border-2 p-2"
-                      placeholder="Enter title"
+                      className="w-full rounded-lg border-2 border-[#ccc]  bg-transparent p-2"
                     />
                   </label>
                 </div>
                 <input
                   type="text"
-                  {...register('address', { required: true })}
-                  className="w-full rounded-md border-2 p-2"
+                  {...register('address', { required: false })}
+                  className="w-full rounded-lg border-2 border-[#ccc] bg-transparent p-2 placeholder:text-white"
                   placeholder="Add address"
                 />
                 <textarea
-                  className="w-full rounded-md border-2 p-2"
-                  {...register('description', { required: true })}
+                  className="w-full rounded-lg border-2 border-[#ccc] bg-transparent p-2 placeholder:text-white"
+                  {...register('description', { required: false })}
                   rows={3}
                   defaultValue={''}
                   placeholder="Add description"
@@ -217,7 +237,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
               </form>
             </Tabs.Content>
 
-            <Tabs.Content value="Appointment">
+            <Tabs.Content value="Appointment" className="outline-none">
               <form onSubmit={appointment.handleSubmit(handleSubmitForm)} className="space-y-3">
                 <label>
                   <Text as="div" size="2" mb="1" weight="bold">
@@ -226,7 +246,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                   <input
                     type="text"
                     {...appointment.register('title', { required: true })}
-                    className="w-full rounded-md border-2 p-2"
+                    className="w-full rounded-lg border-2 border-[#ccc] bg-transparent  p-2 placeholder:text-white"
                     placeholder="Enter title"
                   />
                 </label>
@@ -238,8 +258,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                     <input
                       type="time"
                       {...appointment.register('startTime', { required: true })}
-                      className="w-full rounded-md border-2 p-2"
-                      placeholder="Enter title"
+                      className="w-full rounded-lg border-2 border-[#ccc]  bg-transparent p-2"
                     />
                   </label>
                   <label className="w-full">
@@ -249,20 +268,19 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                     <input
                       type="time"
                       {...appointment.register('endTime', { required: true })}
-                      className="w-full rounded-md border-2 p-2"
-                      placeholder="Enter title"
+                      className="w-full rounded-lg border-2 border-[#ccc]  bg-transparent p-2"
                     />
                   </label>
                 </div>
                 <input
                   type="text"
                   {...appointment.register('linkMeeting', { required: true })}
-                  className="w-full rounded-md border-2 p-2"
+                  className="w-full rounded-lg border-2 border-[#ccc]  bg-transparent p-2 placeholder:text-white"
                   placeholder="Add link meeting"
                 />
                 <textarea
-                  className="w-full rounded-md border-2 p-2"
-                  {...appointment.register('description', { required: true })}
+                  className="w-full rounded-lg border-2 border-[#ccc] bg-transparent p-2 placeholder:text-white "
+                  {...appointment.register('description', { required: false })}
                   rows={3}
                   defaultValue={''}
                   placeholder="Add description"

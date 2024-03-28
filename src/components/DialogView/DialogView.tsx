@@ -21,9 +21,9 @@ const DialogView = ({ children, data, viewDate }: DialogProps) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger>{children}</Dialog.Trigger>
-      <Dialog.Content maxWidth="500px">
+      <Dialog.Content maxWidth="500px" className="bg-[#fff]/50 text-white backdrop-blur-lg">
         <Dialog.Title>All Events</Dialog.Title>
-
+        {data.length === 0 && <p className="flex justify-center py-20 text-white">There are no events today</p>}
         <ul className="space-y-3 pe-1">
           {data.map((item, index) => (
             <div key={index} className="flex items-center gap-2">

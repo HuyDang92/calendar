@@ -13,8 +13,8 @@ module.exports = {
       colors: {
         lightBlue: '#5684AE',
         darkBlue: '#0F4C81',
-        lightOrange: '#E9A89B',
-        darkOrange: '#FF9800',
+        lightOrange: '#FFE4C8',
+        darkOrange: '#F9BE81',
         titleColor: '#E4F6ED',
       },
       boxShadow: {
