@@ -12,5 +12,11 @@ const GlobalContext = createContext({
 
   fullYear: 0,
   setFullYear: (day: number) => {},
+
+  dataEvent: [] as IEvent[],
+  setDataEvent: (data: any) => {},
+
+  urlBackground: '',
+  setUrlBackground: (url: string) => {},
 });
 export default GlobalContext;

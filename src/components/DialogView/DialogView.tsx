@@ -3,85 +3,42 @@ import { useContext } from 'react';
 import Icon from '~/components/customs/Icon';
 import { setYear, setMonth, format, getMonth } from 'date-fns';
 import GlobalContext from '~/context/GlobalContext';
+import EventItem from '~/components/EventItem';
 
 type DialogProps = {
   children: React.ReactNode;
-  type?: string;
-  data: IEvent | IEvent[];
+  data: IEvent[];
   viewDate: string;
 };
 
-const DialogView = ({ children, type = 'all', data, viewDate }: DialogProps) => {
+const DialogView = ({ children, data, viewDate }: DialogProps) => {
+  const { dataEvent, setDataEvent } = useContext(GlobalContext);
+
+  const removeEvent = (idEvent?: string) => {
+    const newArray = dataEvent.filter((item) => item.id !== idEvent);
+    setDataEvent(newArray);
+  };
   return (
     <Dialog.Root>
       <Dialog.Trigger>{children}</Dialog.Trigger>
-      {type === 'all' ? (
-        <Dialog.Content maxWidth="450px">
-          <Dialog.Title>All Events</Dialog.Title>
-          <Dialog.Description size="2" mb="4">
-            <p className="font-semibold text-black">{viewDate}</p>
-          </Dialog.Description>
+      <Dialog.Content maxWidth="500px">
+        <Dialog.Title>All Events</Dialog.Title>
 
-          <Flex direction="column" gap="3">
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold">
-                Name
-              </Text>
-              <TextField.Root defaultValue="Freja Johnsen" placeholder="Enter your full name" />
-            </label>
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold">
-                Email
-              </Text>
-              <TextField.Root defaultValue="freja@example.com" placeholder="Enter your email" />
-            </label>
-          </Flex>
-
-          <Flex gap="3" mt="4" justify="end">
-            <Dialog.Close>
-              <Button variant="soft" color="gray">
-                Cancel
-              </Button>
-            </Dialog.Close>
-            <Dialog.Close>
-              <Button>Save</Button>
-            </Dialog.Close>
-          </Flex>
-        </Dialog.Content>
-      ) : (
-        <Dialog.Content maxWidth="450px">
-          <Dialog.Title>Edit profile</Dialog.Title>
-          <Dialog.Description size="2" mb="4">
-            Make changes to your profile.
-          </Dialog.Description>
-
-          <Flex direction="column" gap="3">
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold">
-                Name
-              </Text>
-              <TextField.Root defaultValue="Freja Johnsen" placeholder="Enter your full name" />
-            </label>
-            <label>
-              <Text as="div" size="2" mb="1" weight="bold">
-                Email
-              </Text>
-              <TextField.Root defaultValue="freja@example.com" placeholder="Enter your email" />
-            </label>
-          </Flex>
-
-          <Flex gap="3" mt="4" justify="end">
-            <Dialog.Close>
-              <Button variant="soft" color="gray">
-                Cancel
-              </Button>
-            </Dialog.Close>
-            <Dialog.Close>
-              <Button>Save</Button>
-            </Dialog.Close>
-          </Flex>
-        </Dialog.Content>
-      )}
+        <ul className="space-y-3 pe-1">
+          {data.map((item, index) => (
+            <div key={index} className="flex items-center gap-2">
+              <div className="w-[95%]">
+                <EventItem data={item} />
+              </div>
+              <Icon
+                onClick={() => removeEvent(item.id)}
+                name="trash-outline"
+                className="cursor-pointer rounded-full p-2 text-darkBlue hover:bg-[#eee]"
+              />
+            </div>
+          ))}
+        </ul>
+      </Dialog.Content>
     </Dialog.Root>
   );
 };

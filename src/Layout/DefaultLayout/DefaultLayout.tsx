@@ -1,11 +1,15 @@
+import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
+import GlobalContext from '~/context/GlobalContext';
 
 function DefaultLayout() {
+  const { urlBackground } = useContext(GlobalContext);
+
   return (
     <div className="mx-auto max-w-7xl p-3">
       <div
         style={{
-          backgroundImage: 'url(/bg.jpg)',
+          backgroundImage: `url(${urlBackground})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           position: 'fixed',

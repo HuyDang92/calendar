@@ -16,7 +16,7 @@ function Home() {
   return (
     <div className="flex justify-between gap-5 ">
       <SideBar month={currentMonth} />
-      <main className="h-[calc(100vh-24px)] w-[70%]  overflow-hidden rounded-xl bg-[#fff]/20 shadow-border-light backdrop-blur-lg">
+      <main className="hidden h-[calc(100vh-24px)] w-[70%] overflow-hidden rounded-xl bg-[#fff]/30 shadow-border-light backdrop-blur-lg sm:block">
         <CalendarHeader month={currentMonth} />
         <Month month={currentMonth} />
       </main>

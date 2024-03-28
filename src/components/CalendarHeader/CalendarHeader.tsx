@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import Icon from '~/components/customs/Icon';
 import { setYear, setMonth, format, getMonth } from 'date-fns';
 import GlobalContext from '~/context/GlobalContext';
+import DialogSetting from '~/components/DialogSetting';
 
 type SideBarProps = {
   month: Date[][];
@@ -55,17 +56,22 @@ const CalendarHeader = ({ month }: SideBarProps) => {
         </div>
         <div className="text-xl font-bold text-darkBlue">{formattedDate}</div>
       </div>
-      <Select.Root defaultValue="month">
-        <Select.Trigger className="min-w-24 rounded-xl bg-lightBlue text-white" />
-        <Select.Content className="">
-          <Select.Group>
-            <Select.Item value="day">Day</Select.Item>
-            <Select.Item value="week">Week</Select.Item>
-            <Select.Item value="month">Month</Select.Item>
-            <Select.Item value="year">Year</Select.Item>
-          </Select.Group>
-        </Select.Content>
-      </Select.Root>
+      <div className="flex items-center gap-5">
+        <DialogSetting>
+          <Icon name="settings-outline" className="rounded-full p-2 text-xl transition-all hover:bg-[#eee]" />
+        </DialogSetting>
+        <Select.Root defaultValue="month">
+          <Select.Trigger className="min-w-24 rounded-xl bg-lightBlue text-white" />
+          <Select.Content className="">
+            <Select.Group>
+              <Select.Item value="day">Day</Select.Item>
+              <Select.Item value="week">Week</Select.Item>
+              <Select.Item value="month">Month</Select.Item>
+              <Select.Item value="year">Year</Select.Item>
+            </Select.Group>
+          </Select.Content>
+        </Select.Root>
+      </div>
     </header>
   );
 };

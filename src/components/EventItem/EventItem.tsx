@@ -1,8 +1,9 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import Icon from '~/components/customs/Icon';
 import { setYear, setMonth, format, getMonth, parseISO } from 'date-fns';
 import GlobalContext from '~/context/GlobalContext';
 import { Avatar } from '@radix-ui/themes';
+import DialogAction from '~/components/DialogAction';
 
 type EventItemProps = {
   data: IEvent;
@@ -48,33 +49,45 @@ const EventItemForType = (data: IEvent) => {
   switch (data.type) {
     case 'Appointment':
       return (
-        <div className={`flex justify-between ${commonStyleWrapper} ${switchThemeBackground(data.theme)}`}>
-          <div className="space-y-2">
-            <h4 className={`${switchThemeTitle(data.theme)} ${commonStyleTitle} `}>{data.title}</h4>
-            <span className="text-sm font-normal text-[#eee]">
-              {format(parseISO(data.startTime), 'HH:mm a')} - {format(parseISO(data.endTime), 'HH:mm a')}
-            </span>
+        <DialogAction date={new Date(data.date)} action="view" data={data}>
+          <div className={`flex justify-between ${commonStyleWrapper} ${switchThemeBackground(data.theme)}`}>
+            <div className="space-y-2">
+              <h4 className={`${switchThemeTitle(data.theme)} ${commonStyleTitle} `}>{data.title}</h4>
+              <span className="text-sm font-normal text-[#eee]">
+                {data.startTime} - {data.endTime}
+                {/* {format(parseISO(data.startTime), 'HH:mm a')} - {format(parseISO(data.endTime), 'HH:mm a')} */}
+              </span>
 
-            <div className="flex items-center gap-3">
-              <Avatar src={data.client?.avatar} fallback="AVT" radius="full" size={'2'} />
-              <a href={data.client?.linkProfile} target="_blank" className="text-xs font-medium text-[#eee] underline">
-                View Client Profile
-              </a>
+              <div className="flex items-center gap-3">
+                <Avatar src={data.client?.avatar} fallback="AVT" radius="full" size={'2'} />
+                <a
+                  href={data.client?.linkProfile}
+                  target="_blank"
+                  className="text-xs font-medium text-[#eee] underline"
+                >
+                  View Client Profile
+                </a>
+              </div>
             </div>
+            <a href={data.linkMeeting} target="_blank">
+              <Icon name="videocam-outline" className={`${switchThemeIcon(data.theme)} rounded-full  p-2 text-2xl`} />
+            </a>
           </div>
-          <Icon name="videocam-outline" className={`${switchThemeIcon(data.theme)} rounded-full  p-2 text-2xl`} />
-        </div>
+        </DialogAction>
       );
     default:
       return (
-        <div className={`${commonStyleWrapper} ${switchThemeBackground(data.theme)}`}>
-          <div className="">
-            <h4 className={`${switchThemeTitle(data.theme)} ${commonStyleTitle}`}>{data.title}</h4>
+        <DialogAction date={new Date(data.date)} action="view" data={data}>
+          <div className={`${commonStyleWrapper} ${switchThemeBackground(data.theme)}`}>
+            <div className="">
+              <h4 className={`${switchThemeTitle(data.theme)} ${commonStyleTitle}`}>{data.title}</h4>
+            </div>
+            <span className="text-sm font-normal text-[#eee]">
+              {data.startTime} - {data.endTime}
+              {/* {format(parseISO(data.startTime), 'HH:mm a')} - {format(parseISO(data.endTime), 'HH:mm a')} */}
+            </span>
           </div>
-          <span className="text-sm font-normal text-[#eee]">
-            {format(parseISO(data.startTime), 'HH:mm a')} - {format(parseISO(data.endTime), 'HH:mm a')}
-          </span>
-        </div>
+        </DialogAction>
       );
   }
 };
@@ -82,4 +95,4 @@ const EventItem = ({ data }: EventItemProps) => {
   return <>{EventItemForType(data)}</>;
 };
 
-export default EventItem;
+export default React.memo(EventItem);
