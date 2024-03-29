@@ -72,7 +72,7 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
       return formattedDate === formattedSelectedDay;
     });
     return filteredData.length > 2 ? (
-      <div className=" px-1 text-[9px] text-lightBlue">+{filteredData.length - 2} more</div>
+      <div className=" px-1 text-[9px] text-white">+{filteredData.length - 2} more</div>
     ) : (
       ''
     );
@@ -102,7 +102,7 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
                   key={index}
                   className={`${switchThemeBackground(
                     item.theme,
-                  )} line-clamp-1 rounded-md border-l-4 p-1 text-[9px] ${switchThemeTitle(item.theme)}`}
+                  )} line-clamp-1 rounded-md border-l-4 p-1 py-[2px] text-[10px] ${switchThemeTitle(item.theme)}`}
                 >
                   {item.title}
                 </div>
