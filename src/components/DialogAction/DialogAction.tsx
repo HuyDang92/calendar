@@ -146,7 +146,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
           <TabsList className={`"grid  grid-cols-2 ${data ? '' : 'grid w-full grid-cols-2'}`}>
             {!data && (
               <TabsTrigger
-                className=" bg-transparent p-1 text-[16px] text-[#fff]"
+                className=" bg-transparent p-1 text-[16px] text-[#ccc] "
                 value="Event"
                 onClick={() => setType('Event')}
               >
@@ -155,7 +155,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
             )}
             {!data && (
               <TabsTrigger
-                className=" bg-transparent p-1 text-[16px] text-[#fff]"
+                className=" bg-transparent p-1 text-[16px] text-[#ccc] "
                 value="Appointment"
                 onClick={() => setType('Appointment')}
               >

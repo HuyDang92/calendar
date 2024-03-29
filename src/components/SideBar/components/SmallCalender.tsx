@@ -71,13 +71,13 @@ const SmallCalendar = () => {
         <Icon
           name="chevron-back-outline"
           onClick={decrementMonth}
-          className="cursor-pointer rounded-full p-2 transition-all hover:bg-lightBlue"
+          className="cursor-pointer rounded-full p-2 transition-all hover:bg-white"
         />
         <div className="text-lg font-bold text-darkBlue">{formattedDate}</div>
         <Icon
           onClick={incrementMonth}
           name="chevron-forward-outline"
-          className="cursor-pointer rounded-full p-2 transition-all hover:bg-lightBlue"
+          className="cursor-pointer rounded-full p-2 transition-all hover:bg-white"
         />
       </div>
       <div className="grid grid-cols-7 px-5">

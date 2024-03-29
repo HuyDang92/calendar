@@ -60,26 +60,27 @@ const CalendarHeader = ({ month }: SideBarProps) => {
           <Icon
             name="chevron-back-outline"
             onClick={decrementMonth}
-            className="cursor-pointer rounded-full p-2 transition-all hover:bg-lightBlue"
+            className="cursor-pointer rounded-full p-2 transition-all hover:bg-white"
           />
           <Icon
             onClick={incrementMonth}
             name="chevron-forward-outline"
-            className="cursor-pointer rounded-full p-2 transition-all hover:bg-lightBlue"
+            className="cursor-pointer rounded-full p-2 transition-all hover:bg-white"
           />
         </div>
         <div className="text-xl font-bold text-darkBlue">{formattedDate}</div>
       </div>
       <div className="hidden items-center gap-5 sm:flex">
         <DialogSetting>
-          <Icon name="settings-outline" className="rounded-full p-2 text-xl transition-all hover:bg-lightBlue" />
+          <Icon name="settings-outline" className="rounded-full p-2 text-xl transition-all hover:bg-white" />
         </DialogSetting>
         <Select>
           <SelectTrigger className="h-9 w-[100px] rounded-xl border-none bg-lightBlue text-white outline-none">
             <SelectValue placeholder="Month" />
           </SelectTrigger>
-          <SelectContent className="text-white">
+          <SelectContent className="">
             <SelectItem value="Day">Day</SelectItem>
+            <SelectItem value="Week">Week</SelectItem>
             <SelectItem value="Month">Month</SelectItem>
             <SelectItem value="Year">Year</SelectItem>
           </SelectContent>
