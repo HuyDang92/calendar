@@ -14,7 +14,7 @@ type SideBarProps = {
 const SideBar = ({ month }: SideBarProps) => {
   const { daySelected, dataEvent } = useContext(GlobalContext);
   const [viewDate, setViewDate] = useState<string>(format(new Date(), 'EEEE, dd MMMM yyyy'));
-  const [data, setDataCover] = useState<IEvent[]>([]);
+  const [data, setData] = useState<IEvent[]>([]);
 
   useEffect(() => {
     if (daySelected !== null) {
@@ -25,7 +25,7 @@ const SideBar = ({ month }: SideBarProps) => {
         return formattedDate === formattedSelectedDay;
       });
 
-      setDataCover(filteredData);
+      setData(filteredData);
     }
   }, [daySelected, dataEvent]);
 

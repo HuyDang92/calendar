@@ -20,7 +20,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
   const [type, setType] = useState<string>('Event');
   const [theme, setTheme] = useState<string>(data?.theme ?? 'lightBlue');
   const colors = ['lightBlue', 'lightOrange', 'darkOrange'];
-  console.log(data?.title);
+  console.log(date.toISOString());
 
   const appointment = useForm<IEvent>({
     defaultValues: {
@@ -60,6 +60,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
       theme: theme,
     };
     if (!data) {
+      console.log(newEvent);
       setDataEvent((prevDataEvent: IEvent[]) => [newEvent, ...prevDataEvent]);
     } else {
       const index = dataEvent.findIndex((item: any) => item.id === newEvent.id);
@@ -104,6 +105,8 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
       appointment.setValue('description', data.description);
       appointment.setValue('theme', data.theme);
     }
+    setValue('date', date.toISOString());
+    appointment.setValue('date', date.toISOString());
   };
   const removeEvent = (idEvent?: string) => {
     const newArray = dataEvent.filter((item) => item.id !== idEvent);
@@ -112,7 +115,9 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
 
   return (
     <Dialog>
-      <DialogTrigger onClick={resetForm}>{children}</DialogTrigger>
+      <DialogTrigger onClick={resetForm} className="w-full">
+        {children}
+      </DialogTrigger>
       <DialogContent className="bg-[#fff]/50 text-white backdrop-blur-sm">
         <div className="flex items-center justify-between">
           <span className="pb-3 font-bold">{data ? 'Update event' : 'Add Event'}</span>

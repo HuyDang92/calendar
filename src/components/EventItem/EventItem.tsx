@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import React from 'react';
 import Icon from '~/components/customs/Icon';
 import DialogAction from '~/components/DialogAction';
@@ -5,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 
 type EventItemProps = {
   data: IEvent;
+  type?: string;
 };
 enum Theme {
   darkBlue = 'darkBlue',
@@ -43,17 +45,23 @@ const switchThemeIcon = (theme: string) => {
   }
 };
 
-const EventItemForType = (data: IEvent) => {
+const EventItemForType = (data: IEvent, type: any) => {
   switch (data.type) {
     case 'Appointment':
       return (
         <DialogAction date={new Date(data.date)} action="view" data={data}>
           <div className={`flex justify-between ${commonStyleWrapper} ${switchThemeBackground(data.theme)}`}>
             <div className="space-y-2">
+              {type === 'view' && (
+                <p className={`"font-bold ${switchThemeTitle(data.theme)}`}>
+                  {format(new Date(data.date), 'dd-MM-yyyy')}
+                </p>
+              )}
               <h4 className={`${switchThemeTitle(data.theme)} ${commonStyleTitle} `}>{data.title}</h4>
               <span className="text-sm font-normal text-[#A9A9A9]">
-                {data.startTime} - {data.endTime}
-                {/* {format(parseISO(data.startTime), 'HH:mm a')} - {format(parseISO(data.endTime), 'HH:mm a')} */}
+                <span>
+                  {data.startTime} - {data.endTime}
+                </span>
               </span>
 
               <div className="flex items-center gap-3">
@@ -80,20 +88,24 @@ const EventItemForType = (data: IEvent) => {
       return (
         <DialogAction date={new Date(data.date)} action="view" data={data}>
           <div className={`${commonStyleWrapper} ${switchThemeBackground(data.theme)}`}>
+            {type === 'view' && (
+              <p className={`"font-bold ${switchThemeTitle(data.theme)}`}>
+                {format(new Date(data.date), 'dd-MM-yyyy')}
+              </p>
+            )}
             <div className="">
               <h4 className={`${switchThemeTitle(data.theme)} ${commonStyleTitle}`}>{data.title}</h4>
             </div>
             <span className="text-sm font-normal text-[#A9A9A9]">
               {data.startTime} - {data.endTime}
-              {/* {format(parseISO(data.startTime), 'HH:mm a')} - {format(parseISO(data.endTime), 'HH:mm a')} */}
             </span>
           </div>
         </DialogAction>
       );
   }
 };
-const EventItem = ({ data }: EventItemProps) => {
-  return <>{EventItemForType(data)}</>;
+const EventItem = ({ data, type }: EventItemProps) => {
+  return <>{EventItemForType(data, type)}</>;
 };
 
 export default React.memo(EventItem);
