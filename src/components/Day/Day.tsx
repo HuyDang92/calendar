@@ -36,7 +36,7 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
   // get day of month
   const dayOfMonth = day.getDate();
   const { monthIndex, fullYear, dataEvent } = useContext(GlobalContext);
-  const [data, setDataCover] = useState<IEvent[]>(dataEvent);
+  const [data, setDataCover] = useState<IEvent[]>([]);
 
   // get current day return highlight color
   const currentDay = () => {
@@ -107,6 +107,7 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
                   {item.title}
                 </div>
               ))}
+            {}
             {moreEvent(day)}
           </div>
         </div>
