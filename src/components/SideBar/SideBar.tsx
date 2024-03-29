@@ -1,9 +1,10 @@
-import { Box, Button, Flex, Heading, ScrollArea, Text } from '@radix-ui/themes';
 import { format, parseISO } from 'date-fns';
 import { useContext, useEffect, useState } from 'react';
 import DialogView from '~/components/DialogView';
 import EventItem from '~/components/EventItem';
 import SmallCalendar from '~/components/SideBar/components/SmallCalender';
+import { Button } from '~/components/ui/button';
+import { ScrollArea } from '~/components/ui/scroll-area';
 import GlobalContext from '~/context/GlobalContext';
 
 type SideBarProps = {
@@ -13,7 +14,7 @@ type SideBarProps = {
 const SideBar = ({ month }: SideBarProps) => {
   const { daySelected, dataEvent } = useContext(GlobalContext);
   const [viewDate, setViewDate] = useState<string>(format(new Date(), 'EEEE, dd MMMM yyyy'));
-  const [data, setDataCover] = useState<IEvent[]>(dataEvent);
+  const [data, setDataCover] = useState<IEvent[]>([]);
 
   useEffect(() => {
     if (daySelected !== null) {
@@ -42,28 +43,26 @@ const SideBar = ({ month }: SideBarProps) => {
   }, [daySelected]);
 
   return (
-    <aside className="top-[12px] flex h-[calc(100vh-24px)] flex-col justify-between rounded-xl bg-[#fff]/30 p-2 shadow-border-light backdrop-blur-lg sm:sticky  sm:w-[30%]">
+    <aside className="shadow-border-light top-[12px] flex h-[calc(100vh-24px)] flex-col justify-between rounded-xl bg-[#fff]/30 p-2 backdrop-blur-lg sm:sticky  sm:w-[30%]">
       <SmallCalendar />
       <div className="px-2">
-        <div className="mt-5 flex items-center justify-between border-t pb-3 pt-5 ">
+        <div className="mt-5 flex items-center justify-between border-t border-white pb-3 pt-5 ">
           <h3 className="text-xl font-bold text-darkBlue">Upcoming Events</h3>
           <DialogView data={data} viewDate={viewDate}>
-            <Button className="h-7 cursor-pointer rounded-full bg-gradient-to-r from-darkBlue to-lightBlue text-xs font-normal">
+            <Button className="h-7 cursor-pointer rounded-full bg-gradient-to-r from-darkBlue to-lightBlue text-xs font-normal text-white">
               View all
             </Button>
           </DialogView>
         </div>
-        <p className="font-semibold text-white">{viewDate}</p>
+        <p className="mb-2 font-semibold text-white">{viewDate}</p>
       </div>
       {data.length === 0 && <p className="flex justify-center py-20 text-white">There are no events today</p>}
-      <ScrollArea type="always" scrollbars="vertical" className="mt-5 px-2">
-        <Box>
-          <ul className="space-y-3 pe-1">
-            {data.map((item, index) => (
-              <EventItem key={index} data={item} />
-            ))}
-          </ul>
-        </Box>
+      <ScrollArea className="min-h-[40vh]">
+        <ul className="flex flex-col space-y-3 pe-3 ">
+          {data.map((item, index) => (
+            <EventItem key={index} data={item} />
+          ))}
+        </ul>
       </ScrollArea>
     </aside>
   );

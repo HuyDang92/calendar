@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Icon from '~/components/customs/Icon';
-import { setYear, setMonth, format, getMonth, parseISO } from 'date-fns';
-import GlobalContext from '~/context/GlobalContext';
-import { Avatar } from '@radix-ui/themes';
 import DialogAction from '~/components/DialogAction';
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 
 type EventItemProps = {
   data: IEvent;
@@ -15,7 +13,7 @@ enum Theme {
   lightOrange = 'lightOrange',
 }
 
-const commonStyleWrapper = 'overflow-hidden rounded-lg border-l-[6px] p-3';
+const commonStyleWrapper = 'overflow-hidden rounded-xl border-l-[6px] p-3 text-left';
 const commonStyleTitle = 'text-[14px] font-medium';
 
 const switchThemeBackground = (theme: string) => {
@@ -59,7 +57,10 @@ const EventItemForType = (data: IEvent) => {
               </span>
 
               <div className="flex items-center gap-3">
-                <Avatar src={data.client?.avatar} fallback="AVT" radius="full" size={'2'} />
+                <Avatar>
+                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
                 <a
                   href={data?.client?.linkProfile}
                   target="_blank"

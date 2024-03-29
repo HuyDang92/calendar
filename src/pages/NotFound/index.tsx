@@ -1,5 +1,5 @@
-import { Button } from '@radix-ui/themes';
 import { NavLink } from 'react-router-dom';
+import { Button } from '~/components/ui/button';
 
 function NotFound() {
   return (

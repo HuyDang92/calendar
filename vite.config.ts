@@ -18,6 +18,7 @@ export default defineConfig({
       routes: path.resolve(__dirname, './src/routes'),
       components: path.resolve(__dirname, './src/components'),
       '~': path.resolve(__dirname, 'src'), // Đặt đường dẫn "~" tới thư mục "src"
+      '@': path.resolve(__dirname, 'src'), // Đặt đường dẫn "~" tới thư mục "src"
     },
   },
 });

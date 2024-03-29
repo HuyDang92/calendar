@@ -87,7 +87,7 @@ const Day: React.FC<DayProps> = ({ day, rowIndex }) => {
           duration: 0.5,
           delay: 0.1 * rowIndex,
         }}
-        className={`flex h-[13.3vh]  cursor-pointer items-start justify-center overflow-hidden border-r border-t  `}
+        className={`flex h-[13.3vh]  cursor-pointer items-start justify-center overflow-hidden border-r border-t border-white  `}
       >
         <div className="w-full">
           <div
