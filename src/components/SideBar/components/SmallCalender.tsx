@@ -4,7 +4,7 @@ import { GetMonth } from '~/util';
 import Icon from '~/components/customs/Icon';
 import GlobalContext from '~/context/GlobalContext';
 import { Link } from 'react-router-dom';
-import { Button } from '@radix-ui/themes';
+import { Button } from '~/components/ui/button';
 
 const SmallCalendar = () => {
   const [currenMonthIndex, setCurrenMonthIndex] = useState(getMonth(new Date()));
@@ -71,13 +71,13 @@ const SmallCalendar = () => {
         <Icon
           name="chevron-back-outline"
           onClick={decrementMonth}
-          className="cursor-pointer rounded-full p-2 transition-all hover:bg-[#eee]"
+          className="cursor-pointer rounded-full p-2 transition-all hover:bg-lightBlue"
         />
         <div className="text-lg font-bold text-darkBlue">{formattedDate}</div>
         <Icon
           onClick={incrementMonth}
           name="chevron-forward-outline"
-          className="cursor-pointer rounded-full p-2 transition-all hover:bg-[#eee]"
+          className="cursor-pointer rounded-full p-2 transition-all hover:bg-lightBlue"
         />
       </div>
       <div className="grid grid-cols-7 px-5">

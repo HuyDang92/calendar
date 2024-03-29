@@ -1,9 +1,13 @@
-import { Button, Dialog, Flex, Select, Text, TextField } from '@radix-ui/themes';
 import { useContext } from 'react';
 import Icon from '~/components/customs/Icon';
-import { setYear, setMonth, format, getMonth } from 'date-fns';
 import GlobalContext from '~/context/GlobalContext';
 import EventItem from '~/components/EventItem';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '~/components/ui/dialog';
 
 type DialogProps = {
   children: React.ReactNode;
@@ -19,10 +23,10 @@ const DialogView = ({ children, data, viewDate }: DialogProps) => {
     setDataEvent(newArray);
   };
   return (
-    <Dialog.Root>
-      <Dialog.Trigger>{children}</Dialog.Trigger>
-      <Dialog.Content maxWidth="500px" className="bg-[#fff]/50 text-white backdrop-blur-lg">
-        <Dialog.Title>All Events</Dialog.Title>
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="rounded-lg border-none bg-[#fff]/50 text-white backdrop-blur-lg">
+        <DialogTitle>All Events</DialogTitle>
         {data.length === 0 && <p className="flex justify-center py-20 text-white">There are no events today</p>}
         <ul className="space-y-3 pe-1">
           {data.map((item, index) => (
@@ -38,8 +42,8 @@ const DialogView = ({ children, data, viewDate }: DialogProps) => {
             </div>
           ))}
         </ul>
-      </Dialog.Content>
-    </Dialog.Root>
+      </DialogContent>
+    </Dialog>
   );
 };
 

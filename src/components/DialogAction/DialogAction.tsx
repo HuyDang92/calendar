@@ -1,10 +1,11 @@
-import { Box, Button, Dialog, Flex, Tabs, Text, TextField } from '@radix-ui/themes';
-import React, { useContext, useEffect, useId, useState } from 'react';
-import { setYear, setMonth, format, getMonth } from 'date-fns';
+import React, { useContext, useState } from 'react';
+import { format } from 'date-fns';
 import GlobalContext from '~/context/GlobalContext';
 import Icon from '~/components/customs/Icon';
 import { useForm } from 'react-hook-form';
-import EventItem from '~/components/EventItem';
+import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
+import { Button } from '~/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 
 type DialogProps = {
   children: React.ReactNode;
@@ -110,14 +111,11 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
   };
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger onClick={resetForm}>{children}</Dialog.Trigger>
-      <Dialog.Content maxWidth="500px" className="bg-[#fff]/40 text-white backdrop-blur-lg">
+    <Dialog>
+      <DialogTrigger onClick={resetForm}>{children}</DialogTrigger>
+      <DialogContent className="bg-[#fff]/50 text-white backdrop-blur-sm">
         <div className="flex items-center justify-between">
-          <span className="pb-3 font-bold">Add Event</span>
-          <Dialog.Close>
-            <Icon name="close-outline" className="rounded-full p-2 transition-all hover:bg-[#fff] hover:text-[#000]" />
-          </Dialog.Close>{' '}
+          <span className="pb-3 font-bold">{data ? 'Update event' : 'Add Event'}</span>
         </div>
         <div className="flex gap-3">
           <Icon name="time-outline" className="text-2xl" />
@@ -144,45 +142,51 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
             </label>
           ))}
         </div>
-        <Tabs.Root defaultValue={data?.type === 'Appointment' ? 'Appointment' : 'Event'}>
-          <Tabs.List>
+        <Tabs defaultValue={data?.type === 'Appointment' ? 'Appointment' : 'Event'}>
+          <TabsList className={`"grid  grid-cols-2 ${data ? '' : 'grid w-full grid-cols-2'}`}>
             {!data && (
-              <Tabs.Trigger className="text-[16px] text-[#fff]" value="Event" onClick={() => setType('Event')}>
+              <TabsTrigger
+                className=" bg-transparent p-1 text-[16px] text-[#fff]"
+                value="Event"
+                onClick={() => setType('Event')}
+              >
                 Event
-              </Tabs.Trigger>
+              </TabsTrigger>
             )}
             {!data && (
-              <Tabs.Trigger
-                className="text-[16px] text-[#fff]"
+              <TabsTrigger
+                className=" bg-transparent p-1 text-[16px] text-[#fff]"
                 value="Appointment"
                 onClick={() => setType('Appointment')}
               >
                 Appointment
-              </Tabs.Trigger>
+              </TabsTrigger>
             )}
             {data?.type === 'Event' && (
-              <Tabs.Trigger className="text-[16px] text-[#fff]" value="Event" onClick={() => setType('Event')}>
+              <TabsTrigger
+                className="w-32  bg-transparent p-1 text-[15px]"
+                value="Event"
+                onClick={() => setType('Event')}
+              >
                 Event
-              </Tabs.Trigger>
+              </TabsTrigger>
             )}
             {data?.type === 'Appointment' && (
-              <Tabs.Trigger
-                className="text-[16px] text-[#fff]"
+              <TabsTrigger
+                className="w-32  bg-transparent p-1 text-[15px]"
                 value="Appointment"
                 onClick={() => setType('Appointment')}
               >
                 Appointment
-              </Tabs.Trigger>
+              </TabsTrigger>
             )}
-          </Tabs.List>
+          </TabsList>
 
           <div className="py-3">
-            <Tabs.Content value="Event" className="outline-none">
+            <TabsContent value="Event" className="outline-none">
               <form onSubmit={handleSubmit(handleSubmitForm)} className="space-y-3">
                 <label>
-                  <Text as="div" size="2" mb="1" weight="bold">
-                    Add title
-                  </Text>
+                  <div className="font-semibold">Add title</div>
                   <input
                     type="text"
                     {...register('title', { required: true })}
@@ -192,9 +196,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                 </label>
                 <div className="flex justify-between gap-3">
                   <label className="w-full">
-                    <Text as="div" size="2" mb="1" weight="bold">
-                      Add start time
-                    </Text>
+                    <div className="font-semibold">Add start time</div>
                     <input
                       type="time"
                       {...register('startTime', { required: true })}
@@ -202,9 +204,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                     />
                   </label>
                   <label className="w-full">
-                    <Text as="div" size="2" mb="1" weight="bold">
-                      Add end time
-                    </Text>
+                    <div className="font-semibold">Add end time</div>
                     <input
                       type="time"
                       {...register('endTime', { required: true })}
@@ -227,38 +227,33 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                 />
                 <div className="float-end flex gap-4">
                   {!data ? (
-                    <Button
-                      onClick={() => reset()}
-                      variant="outline"
-                      className="float-end flex rounded-lg text-lightBlue"
-                    >
+                    <Button onClick={() => reset()} variant="ghost" className="border-white bg-transparent">
                       Reset
                     </Button>
                   ) : (
-                    <Dialog.Close>
+                    <DialogClose>
                       <Button
                         onClick={() => removeEvent(data?.id)}
+                        variant={'secondary'}
                         className="float-end flex rounded-lg bg-red-500 text-white"
                       >
                         Remove
                       </Button>
-                    </Dialog.Close>
+                    </DialogClose>
                   )}
-                  <Dialog.Close>
-                    <Button type="submit" className=" flex rounded-lg bg-lightBlue">
+                  <DialogClose>
+                    <Button type="submit" variant={'secondary'} className=" flex rounded-lg bg-lightBlue text-white">
                       {data ? 'Update' : 'Save'}
                     </Button>
-                  </Dialog.Close>
+                  </DialogClose>
                 </div>
               </form>
-            </Tabs.Content>
+            </TabsContent>
 
-            <Tabs.Content value="Appointment" className="outline-none">
+            <TabsContent value="Appointment" className="outline-none">
               <form onSubmit={appointment.handleSubmit(handleSubmitForm)} className="space-y-3">
                 <label>
-                  <Text as="div" size="2" mb="1" weight="bold">
-                    Add title
-                  </Text>
+                  <div className="font-semibold">Add title</div>
                   <input
                     type="text"
                     {...appointment.register('title', { required: true })}
@@ -268,9 +263,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                 </label>
                 <div className="flex justify-between gap-3">
                   <label className="w-full">
-                    <Text as="div" size="2" mb="1" weight="bold">
-                      Add start time
-                    </Text>
+                    <div className="font-semibold">Add start time</div>
                     <input
                       type="time"
                       {...appointment.register('startTime', { required: true })}
@@ -278,9 +271,7 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                     />
                   </label>
                   <label className="w-full">
-                    <Text as="div" size="2" mb="1" weight="bold">
-                      Add end time
-                    </Text>
+                    <div className="font-semibold">Add end time</div>
                     <input
                       type="time"
                       {...appointment.register('endTime', { required: true })}
@@ -303,35 +294,32 @@ const DialogAction = ({ children, date, action, data }: DialogProps) => {
                 />
                 <div className="float-end flex gap-4">
                   {!data ? (
-                    <Button
-                      onClick={() => reset()}
-                      variant="outline"
-                      className="float-end flex rounded-lg text-lightBlue"
-                    >
+                    <Button onClick={() => reset()} variant="ghost" className="border-white bg-transparent">
                       Reset
                     </Button>
                   ) : (
-                    <Dialog.Close>
+                    <DialogClose>
                       <Button
                         onClick={() => removeEvent(data?.id)}
+                        variant={'secondary'}
                         className="float-end flex rounded-lg bg-red-500 text-white"
                       >
                         Remove
                       </Button>
-                    </Dialog.Close>
+                    </DialogClose>
                   )}
-                  <Dialog.Close>
-                    <Button type="submit" className=" flex rounded-lg bg-lightBlue">
+                  <DialogClose>
+                    <Button type="submit" variant={'secondary'} className=" flex rounded-lg bg-lightBlue text-white">
                       {data ? 'Update' : 'Save'}
                     </Button>
-                  </Dialog.Close>
+                  </DialogClose>
                 </div>
               </form>
-            </Tabs.Content>
+            </TabsContent>
           </div>
-        </Tabs.Root>
-      </Dialog.Content>
-    </Dialog.Root>
+        </Tabs>
+      </DialogContent>
+    </Dialog>
   );
 };
 

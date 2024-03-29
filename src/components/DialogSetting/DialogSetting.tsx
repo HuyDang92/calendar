@@ -1,7 +1,7 @@
-import { Button, Dialog } from '@radix-ui/themes';
 import { useContext, useState } from 'react';
 import Icon from '~/components/customs/Icon';
 import GlobalContext from '~/context/GlobalContext';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '~/components/ui/dialog';
 
 type DialogProps = {
   children: React.ReactNode;
@@ -11,10 +11,10 @@ const DialogSetting = ({ children }: DialogProps) => {
   const backgroundUrl = ['/bg.jpg', '/bg1.jpg', '/bg2.jpg', '/bg3.jpg', '/bg4.jpg', '/bg5.jpg'];
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger>{children}</Dialog.Trigger>
-      <Dialog.Content maxWidth="900px">
-        <Dialog.Title>Setting</Dialog.Title>
+    <Dialog>
+      <DialogTrigger>{children}</DialogTrigger>
+      <DialogContent className="rounded-lg border-none bg-[#fff]/50 text-white backdrop-blur-lg">
+        <DialogTitle>Setting</DialogTitle>
         <h2 className="">Change background</h2>
         {/* <div className="my-5 grid grid-cols-3 gap-2">
           {backgroundUrl.map((item, index) => (
@@ -35,8 +35,8 @@ const DialogSetting = ({ children }: DialogProps) => {
                 src={item}
                 alt=""
                 className={`${
-                  urlBackground === item && 'border-2 border-lightBlue'
-                } h-[10rem] w-full rounded-xl object-cover p-1 `}
+                  urlBackground === item && 'border-2 border-darkBlue'
+                } h-[6rem] w-full rounded-xl object-cover p-1 `}
               />
               {urlBackground === item && (
                 <Icon
@@ -47,8 +47,8 @@ const DialogSetting = ({ children }: DialogProps) => {
             </label>
           ))}
         </div>
-      </Dialog.Content>
-    </Dialog.Root>
+      </DialogContent>
+    </Dialog>
   );
 };
 
